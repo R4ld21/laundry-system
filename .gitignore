@@ -1,0 +1,31 @@
+# Secrets — never commit these
+gmail_config.json
+config.py
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated receipts (optional — remove this line if you want them in the repo)
+receipts/
+
+# Local DB exports (optional — you can keep the .sql for submission, but skip the raw dump)
+# laundry_db_export.sql
