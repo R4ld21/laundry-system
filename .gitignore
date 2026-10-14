@@ -29,3 +29,6 @@ receipts/
 
 # Local DB exports (optional — you can keep the .sql for submission, but skip the raw dump)
 # laundry_db_export.sql
+
+# Local SQLite leftover (unused)
+laundry.db

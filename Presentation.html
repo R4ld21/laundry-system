@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Laundry Management System — Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#4FA8D8;
+  --sky-dark:#2C7BA8;
+  --sky-deep:#14384D;
+  --bubble:#E8F4FB;
+  --soft-blue:#D6ECF7;
+  --foam:#FFFFFF;
+  --cream:#F5FAFD;
+  --accent:#F2A65A;
+  --muted:#5A7A8C;
+  --success:#1E9E5A;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{font-size:clamp(14px,min(1.1vw,1.9vh),24px)}
+html,body{height:100%;margin:0}
+body{
+  background:var(--sky-deep);
+  color:var(--sky-deep);
+  font-family:'Quicksand',system-ui,sans-serif;
+  font-weight:600;
+  overflow:hidden;
+}
+.deck{position:relative;height:100%;width:100%}
+.slide{
+  position:absolute;inset:0;
+  display:none;
+  flex-direction:column;
+  justify-content:flex-start;
+  padding:clamp(1rem,4vw,3.5rem) clamp(1rem,6vw,5.5rem) 5.5rem;
+  overflow-y:auto;
+  background:
+    radial-gradient(circle at 15% 25%, rgba(79,168,216,0.10) 0%, transparent 22%),
+    radial-gradient(circle at 85% 78%, rgba(79,168,216,0.08) 0%, transparent 20%),
+    repeating-linear-gradient(45deg, rgba(79,168,216,0.025) 0px, rgba(79,168,216,0.025) 1px, transparent 1px, transparent 14px),
+    repeating-linear-gradient(-45deg, rgba(79,168,216,0.025) 0px, rgba(79,168,216,0.025) 1px, transparent 1px, transparent 14px),
+    linear-gradient(160deg, #FFFFFF 0%, #EAF4FB 100%);
+}
+.slide.on{display:flex}
+.slide.alt{
+  background:
+    radial-gradient(circle at 80% 20%, rgba(79,168,216,0.14) 0%, transparent 24%),
+    radial-gradient(circle at 10% 85%, rgba(242,166,90,0.10) 0%, transparent 22%),
+    repeating-linear-gradient(45deg, rgba(79,168,216,0.03) 0px, rgba(79,168,216,0.03) 1px, transparent 1px, transparent 14px),
+    linear-gradient(160deg, #EAF4FB 0%, #FFFFFF 100%);
+}
+h1,h2{font-family:'Fredoka',sans-serif;font-weight:700;margin:0;line-height:1.05;letter-spacing:-0.5px}
+h2{font-size:clamp(2rem,min(5.2vw,8vh),4rem);color:var(--sky-dark);margin-bottom:.5em;position:relative;padding-bottom:.3em}
+h2::after{content:"";position:absolute;left:0;bottom:0;width:5em;height:6px;background:linear-gradient(to right,var(--sky),var(--accent));border-radius:6px}
+h3{font-family:'Fredoka',sans-serif;font-weight:600;font-size:clamp(1.2rem,2.4vw,2rem);margin:0 0 .3em;color:var(--sky-dark)}
+p,li{font-size:clamp(1rem,min(2.2vw,3.6vh),1.6rem);line-height:1.45;margin:.25em 0;color:var(--sky-deep)}
+ul{padding-left:0;margin:.4em 0;list-style:none}
+ul li{position:relative;padding-left:1.5em;margin-bottom:.35em}
+ul li::before{content:"";position:absolute;left:.15em;top:.55em;width:.55em;height:.55em;border-radius:50%;background:radial-gradient(circle at 30% 30%,#FFFFFF,var(--sky) 80%);box-shadow:0 1px 3px rgba(79,168,216,0.4)}
+.grid{display:grid;gap:clamp(.8rem,2vw,1.4rem);grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:clamp(1rem,2vw,1.6rem);
+  border:3px solid var(--soft-blue);
+  box-shadow:0 8px 22px rgba(44,123,168,0.10);
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  top:-30px;right:-30px;
+  width:80px;height:80px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#FFFFFF,var(--soft-blue));
+  opacity:0.6;
+}
+.card h3{color:var(--sky-dark);position:relative;z-index:1}
+.card p, .card li{position:relative;z-index:1}
+.card.hi{background:linear-gradient(135deg,#4FA8D8 0%,#2C7BA8 100%);color:#fff;border-color:var(--sky-dark)}
+.card.hi h3{color:#fff}
+.card.hi p{color:rgba(255,255,255,0.95)}
+.card.warm{background:linear-gradient(135deg,#FFE9CC 0%,#FFD9A8 100%);border-color:var(--accent)}
+.card.warm h3{color:#8B4513}
+.tag{display:inline-block;background:var(--soft-blue);color:var(--sky-dark);border-radius:999px;padding:.15em .8em;font-size:clamp(.9rem,1.8vw,1.3rem);margin:.15em .25em .15em 0;font-weight:700}
+code{background:var(--soft-blue);color:var(--sky-dark);padding:.15em .6em;border-radius:8px;font-family:'Consolas',monospace;font-size:.9em;font-weight:700}
+pre{background:#14384D;color:#E8F4FB;padding:1rem 1.2rem;border-radius:14px;font-size:clamp(.85rem,1.6vw,1.2rem);overflow-x:auto;margin:.4rem 0;font-family:'Consolas',monospace;line-height:1.5}
+.steps{display:flex;flex-wrap:wrap;gap:.8rem;align-items:stretch}
+.step{flex:1 1 150px;background:linear-gradient(135deg,#4FA8D8,#2C7BA8);color:#fff;border-radius:18px;padding:1rem;text-align:center;font-size:clamp(1rem,2vw,1.5rem);font-weight:700;box-shadow:0 8px 18px rgba(44,123,168,0.20)}
+.step b{display:grid;place-items:center;width:2.2em;height:2.2em;margin:0 auto .4em;border-radius:50%;background:#fff;color:var(--sky-dark);font-family:'Fredoka',sans-serif}
+
+/* ---- Intro Slide ---- */
+#intro{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 30% 50%, #4FA8D8 0%, #2C7BA8 55%, #14384D 100%);
+  color:#fff;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding-bottom:6rem;
+}
+.bubbles{
+  position:absolute;inset:0;
+  pointer-events:none;overflow:hidden;
+}
+.bubbles i{
+  position:absolute;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85), rgba(255,255,255,0.15) 60%, rgba(255,255,255,0.05));
+  opacity:0;
+  animation:rise linear infinite;
+}
+@keyframes rise{
+  0%{opacity:0;transform:translateY(20px) scale(0.5)}
+  20%{opacity:0.75}
+  100%{opacity:0;transform:translateY(-110vh) scale(1.4)}
+}
+.bubbles i:nth-child(1){left:10%;width:60px;height:60px;animation-duration:11s;animation-delay:0s}
+.bubbles i:nth-child(2){left:25%;width:35px;height:35px;animation-duration:9s;animation-delay:1.5s}
+.bubbles i:nth-child(3){left:42%;width:80px;height:80px;animation-duration:13s;animation-delay:.8s}
+.bubbles i:nth-child(4){left:62%;width:45px;height:45px;animation-duration:10s;animation-delay:2.2s}
+.bubbles i:nth-child(5){left:78%;width:70px;height:70px;animation-duration:12s;animation-delay:.3s}
+.bubbles i:nth-child(6){left:88%;width:50px;height:50px;animation-duration:9.5s;animation-delay:3s}
+.bubbles i:nth-child(7){left:15%;width:90px;height:90px;animation-duration:14s;animation-delay:4s}
+.bubbles i:nth-child(8){left:55%;width:40px;height:40px;animation-duration:8.5s;animation-delay:2.8s}
+
+.hero{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;
+  gap:1rem;
+  max-width:min(90vw,1100px);
+}
+.washer{
+  --w:clamp(160px,min(30vw,32vh),360px);
+  width:var(--w);height:var(--w);
+  border-radius:24px;
+  background:linear-gradient(150deg,#FFFFFF 0%,#E8F4FB 100%);
+  border:8px solid #fff;
+  box-shadow:
+    inset 0 0 0 6px #D6ECF7,
+    0 24px 60px rgba(0,0,0,0.35),
+    0 0 60px rgba(255,255,255,0.15);
+  position:relative;
+  display:grid;place-items:center;
+  overflow:hidden;
+  opacity:0;
+  animation:washerIn .8s .3s forwards cubic-bezier(.2,1.5,.4,1);
+}
+@keyframes washerIn{from{opacity:0;transform:translateY(-60px) scale(.7)}to{opacity:1;transform:none}}
+.washer::before{
+  content:"";
+  position:absolute;inset:12%;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 40% 40%, rgba(255,255,255,0.9), transparent 50%),
+    radial-gradient(circle at 30% 30%, #4FA8D8 0%, #2C7BA8 60%, #14384D 100%);
+  box-shadow:inset 0 0 30px rgba(0,0,0,0.4);
+  animation:spin 8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.washer::after{
+  content:"";
+  position:absolute;
+  left:50%;top:50%;
+  width:14%;height:14%;
+  border-radius:50%;
+  background:#fff;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 0 4px rgba(255,255,255,0.4);
+}
+.washer .knob{
+  position:absolute;
+  top:8%;right:8%;
+  width:14%;height:14%;
+  border-radius:50%;
+  background:linear-gradient(150deg,#D6ECF7,#4FA8D8);
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,0.08);
+}
+
+.title{
+  font-family:'Fredoka',sans-serif;
+  font-weight:700;
+  font-size:clamp(2rem,min(8vw,12vh),5.5rem);
+  color:#fff;
+  text-shadow:0 6px 30px rgba(0,0,0,0.35);
+  margin:0;
+  white-space:nowrap;
+  letter-spacing:-1px;
+}
+.title span{display:inline-block;opacity:0;animation:slam .5s both cubic-bezier(.2,1.7,.4,1);animation-delay:calc(1s + var(--i)*.05s)}
+@keyframes slam{from{opacity:0;transform:translateY(-100px) scale(1.8) rotate(-10deg)}to{opacity:1;transform:none}}
+.subtitle{
+  font-family:'Fredoka',sans-serif;
+  font-weight:600;
+  background:rgba(255,255,255,0.18);
+  border:3px solid rgba(255,255,255,0.5);
+  backdrop-filter:blur(6px);
+  padding:.35em 1.1em;
+  border-radius:999px;
+  font-size:clamp(1rem,2.2vw,1.5rem);
+  color:#fff;
+  margin:0;
+  opacity:0;
+  animation:fadeUp .6s 2s forwards;
+}
+.chips{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:.4rem}
+.chips span{
+  font-family:'Fredoka',sans-serif;
+  font-weight:600;
+  font-size:clamp(.9rem,1.8vw,1.2rem);
+  background:rgba(255,255,255,0.92);
+  color:var(--sky-dark);
+  padding:.3em 1em;
+  border-radius:999px;
+  opacity:0;
+  animation:fadeUp .5s both;
+}
+.chips span:nth-child(1){animation-delay:2.3s}
+.chips span:nth-child(2){animation-delay:2.5s}
+.chips span:nth-child(3){animation-delay:2.7s}
+.chips span:nth-child(4){animation-delay:2.9s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.hint{
+  position:fixed;
+  left:50%;bottom:calc(4.5rem + 1rem);
+  transform:translateX(-50%);
+  font-family:'Fredoka',sans-serif;
+  font-size:clamp(.9rem,1.8vw,1.2rem);
+  background:#fff;
+  color:var(--sky-dark);
+  padding:.4em 1.1em;
+  border-radius:999px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.2);
+  opacity:0;
+  animation:fadeIn .6s 3.2s forwards,nudge 1.5s 3.8s infinite;
+  z-index:6;
+  white-space:nowrap;
+}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes nudge{50%{transform:translateX(-50%) translateY(-6px)}}
+
+/* ---- Controls ---- */
+.bar{
+  position:fixed;left:0;right:0;bottom:0;
+  height:4.5rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:0 clamp(.8rem,3vw,2rem);
+  background:linear-gradient(90deg,#2C7BA8,#4FA8D8);
+  border-top:4px solid #fff;
+  z-index:5;
+}
+.bar button{
+  font-family:'Fredoka',sans-serif;font-weight:600;
+  font-size:clamp(.95rem,1.8vw,1.3rem);
+  background:#fff;
+  color:var(--sky-dark);
+  border:0;border-radius:14px;
+  padding:.55em 1.2em;
+  cursor:pointer;
+  box-shadow:0 4px 0 rgba(0,0,0,0.15);
+  transition:transform .1s;
+}
+.bar button:hover{transform:translateY(-2px)}
+.bar button:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,0.15)}
+.count{font-family:'Fredoka',sans-serif;font-size:clamp(1rem,2vw,1.4rem);color:#fff;font-weight:600}
+.prog{position:fixed;top:0;left:0;height:6px;background:linear-gradient(90deg,#fff,#F2A65A);width:0;transition:width .3s;z-index:6}
+
+/* ---- Wave transition ---- */
+.wave{
+  position:fixed;
+  left:0;right:0;top:0;bottom:4.5rem;
+  z-index:4;
+  display:none;
+  pointer-events:none;
+  overflow:hidden;
+}
+.wave.run{display:block}
+.wave i{
+  position:absolute;left:-110%;
+  top:0;bottom:0;
+  width:110%;
+  background:linear-gradient(135deg,#4FA8D8,#2C7BA8);
+  border-radius:0 60% 60% 0 / 0 50% 50% 0;
+}
+.wave.fwd i{animation:sweepF .9s both cubic-bezier(.65,0,.35,1)}
+.wave.back i{animation:sweepB .9s both cubic-bezier(.65,0,.35,1)}
+.wave i:nth-child(2){background:#E8F4FB;animation-delay:.08s;border-radius:0 50% 50% 0 / 0 40% 40% 0}
+@keyframes sweepF{0%{left:-110%}40%,60%{left:0}100%{left:110%}}
+@keyframes sweepB{0%{left:110%}40%,60%{left:0}100%{left:-110%}}
+
+/* Content animations */
+.on:not(#intro)>h2{animation:pop .5s .1s backwards cubic-bezier(.2,1.7,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(1.6) rotate(-3deg)}to{opacity:1;transform:none}}
+.on:not(#intro)>p{animation:fadeUp .5s .4s backwards}
+.on .card,.on .step{animation:cardIn .55s backwards cubic-bezier(.2,1.5,.4,1)}
+.on .grid>:nth-child(1),.on .steps>:nth-child(1){animation-delay:.25s}
+.on .grid>:nth-child(2),.on .steps>:nth-child(2){animation-delay:.4s}
+.on .grid>:nth-child(3),.on .steps>:nth-child(3){animation-delay:.55s}
+.on .grid>:nth-child(4),.on .steps>:nth-child(4){animation-delay:.7s}
+@keyframes cardIn{from{opacity:0;transform:translateY(50px) rotate(-3deg) scale(.9)}to{opacity:1;transform:none}}
+.card:hover,.step:hover{transform:translateY(-6px);transition:transform .2s}
+.on .tag{animation:fadeUp .4s backwards}
+.on .tag:nth-child(1){animation-delay:.3s}
+.on .tag:nth-child(2){animation-delay:.4s}
+.on .tag:nth-child(3){animation-delay:.5s}
+
+/* Confetti on last slide */
+.confetti{position:fixed;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+.confetti b{
+  position:absolute;top:-40px;
+  font-size:clamp(1.4rem,3vw,2.4rem);
+  animation:fall linear forwards;
+}
+@keyframes fall{to{transform:translateY(115vh) rotate(720deg)}}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  .wave{display:none!important}
+  .on .card,.on .step,.on>h2,.on>p,.on .tag,.confetti,.bubbles i,.washer,.washer::before,.title span,.subtitle,.chips span,.hint{animation:none!important;opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+<div class="wave" id="wave" aria-hidden="true"><i></i><i></i></div>
+<main class="deck" id="deck">
+
+<!-- Slide 1: Intro -->
+<section class="slide" id="intro">
+  <div class="bubbles" aria-hidden="true">
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  </div>
+  <div class="hero">
+    <div class="washer" aria-hidden="true"><div class="knob"></div></div>
+    <h1 class="title" aria-label="Laundry Management System">
+      <span style="--i:0">L</span><span style="--i:1">a</span><span style="--i:2">u</span><span style="--i:3">n</span><span style="--i:4">d</span><span style="--i:5">r</span><span style="--i:6">y</span>
+      <span style="--i:7">&nbsp;</span>
+      <span style="--i:8">M</span><span style="--i:9">a</span><span style="--i:10">n</span><span style="--i:11">a</span><span style="--i:12">g</span><span style="--i:13">e</span><span style="--i:14">m</span><span style="--i:15">e</span><span style="--i:16">n</span><span style="--i:17">t</span>
+    </h1>
+    <p class="subtitle">Desktop Order &amp; Billing System for a Laundry Shop</p>
+    <div class="chips">
+      <span>Order</span>
+      <span>Bill</span>
+      <span>Notify</span>
+      <span>Track</span>
+    </div>
+  </div>
+  <div class="hint">Press &rarr; or tap Next to continue</div>
+</section>
+
+<!-- Slide 2: Purpose & Users -->
+<section class="slide alt">
+  <h2>Purpose &amp; Users</h2>
+  <div class="grid">
+    <div class="card hi">
+      <h3>Purpose</h3>
+      <p>Replace manual logbooks, hand-written receipts, and phone-based order tracking with one clean desktop workflow.</p>
+    </div>
+    <div class="card warm">
+      <h3>Who it helps</h3>
+      <p><b>Shop Staff</b> — add orders, update status, notify customers.</p>
+      <p><b>Shop Owner</b> — monitor daily revenue and completed orders at a glance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 3: The Problem -->
+<section class="slide">
+  <h2>The Problem</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Manual tracking</h3>
+      <p>Small shops rely on paper tickets and mental math, leading to lost orders and pricing mistakes.</p>
+    </div>
+    <div class="card warm">
+      <h3>No automatic updates</h3>
+      <p>Customers have to call or walk back to check if their laundry is ready.</p>
+    </div>
+    <div class="card hi">
+      <h3>No record keeping</h3>
+      <p>Owners cannot easily see how much they earned today, this week, or this month.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 4: Our Solution -->
+<section class="slide alt">
+  <h2>Our Solution</h2>
+  <div class="grid">
+    <div class="card hi">
+      <h3>Automated ordering</h3>
+      <p>Staff enter name, Gmail, and weight — the system calculates the total and prints a receipt instantly.</p>
+    </div>
+    <div class="card">
+      <h3>Live status tracking</h3>
+      <p>Every order moves from Pending to Completed with a single click. Nothing gets forgotten.</p>
+    </div>
+    <div class="card warm">
+      <h3>Automatic notifications</h3>
+      <p>When an order is marked Completed, an email is sent to the customer's Gmail automatically.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 5: System Architecture -->
+<section class="slide">
+  <h2>System Architecture</h2>
+  <div class="grid">
+    <div class="card hi">
+      <h3>Application</h3>
+      <p>Main GUI window and event controller. Handles all screens, buttons, and user input.</p>
+    </div>
+    <div class="card warm">
+      <h3>LaundryDatabase</h3>
+      <p>Encapsulates all MySQL operations — CRUD for customers, orders, and users.</p>
+    </div>
+    <div class="card">
+      <h3>GmailService</h3>
+      <p>Manages SMTP connection and sends completion notifications.</p>
+    </div>
+    <div class="card hi">
+      <h3>AuthService</h3>
+      <p>Validates login credentials using SHA-256 hashed passwords.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 6: Database Design -->
+<section class="slide alt">
+  <h2>Database Design</h2>
+  <p>Three MySQL tables work together to keep the data clean and relational.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Customers</h3>
+      <p>Stores reusable customer info — Name, Email.</p>
+    </div>
+    <div class="card warm">
+      <h3>Orders</h3>
+      <p>Links to a Customer. Stores Weight, Rate, Total Price, Status, and timestamps.</p>
+    </div>
+    <div class="card hi">
+      <h3>Users</h3>
+      <p>Stores hashed passwords for the login screen.</p>
+    </div>
+  </div>
+  <p style="margin-top:1.2rem"><b>Relationship:</b> One Customer can have many Orders &nbsp;<code>1 : N</code></p>
+</section>
+
+<!-- Slide 7: CRUD -->
+<section class="slide">
+  <h2>Core Features — CRUD</h2>
+  <div class="grid">
+    <div class="card hi"><h3>Create</h3><p>Add a new laundry order and calculate the total price instantly.</p></div>
+    <div class="card"><h3>Read</h3><p>Display a live list of Pending and Completed orders on the dashboard.</p></div>
+    <div class="card warm"><h3>Update</h3><p>Edit customer details or order weight, or mark the order Completed.</p></div>
+    <div class="card hi"><h3>Delete</h3><p>Remove an order with a confirmation prompt to prevent accidents.</p></div>
+  </div>
+</section>
+
+<!-- Slide 8: Additional Features -->
+<section class="slide alt">
+  <h2>Additional Features</h2>
+  <div class="grid">
+    <div class="card"><h3>Login Screen</h3><p>Secure access with hashed passwords stored in MySQL.</p></div>
+    <div class="card warm"><h3>Search / Filter</h3><p>Filter orders by customer name, Gmail address, or order number.</p></div>
+    <div class="card hi"><h3>Receipt Generation</h3><p>Creates a <code>.txt</code> receipt file for every order automatically.</p></div>
+    <div class="card"><h3>Dashboard Statistics</h3><p>Live totals for orders, revenue, and per-status counts.</p></div>
+    <div class="card warm"><h3>Automatic Email</h3><p>Sends a completion notice to the customer's Gmail via SMTP.</p></div>
+    <div class="card hi"><h3>Logout</h3><p>Safe session exit back to the login screen.</p></div>
+  </div>
+</section>
+
+<!-- Slide 9: Tech Stack -->
+<section class="slide">
+  <h2>Built With</h2>
+  <p><span class="tag">Python 3</span><span class="tag">CustomTkinter</span><span class="tag">MySQL</span><span class="tag">mysql-connector-python</span><span class="tag">smtplib</span></p>
+  <div class="grid">
+    <div class="card hi"><h3>Python + OOP</h3><p>All logic organized with classes: <code>Application</code>, <code>LaundryDatabase</code>, <code>GmailService</code>, <code>AuthService</code>.</p></div>
+    <div class="card warm"><h3>CustomTkinter</h3><p>Modern, clean, and consistent GUI with dark mode support.</p></div>
+    <div class="card"><h3>MySQL</h3><p>Persistent relational storage — data remains after the app is closed.</p></div>
+  </div>
+</section>
+
+<!-- Slide 10: Thank You -->
+<section class="slide" id="final" style="text-align:center;align-items:center;justify-content:center">
+  <h2 style="font-size:clamp(2.4rem,7vw,5.5rem);text-align:center">Thank You</h2>
+  <p style="font-size:clamp(1.2rem,2.4vw,1.7rem);margin-top:.6rem">We are now ready for your questions.</p>
+  <div class="chips" style="margin-top:1.4rem">
+    <span>Clean orders</span>
+    <span>Clear billing</span>
+    <span>Happy customers</span>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Slide controls">
+  <button id="prev" type="button">&larr; Back</button>
+  <span class="count" id="count">1 / 10</span>
+  <button id="next" type="button">Next &rarr;</button>
+</nav>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide')),
+      i=0,busy=false,
+      wave=document.getElementById('wave'),
+      calm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(s,k){s.classList.toggle('on',k===i)});
+    document.getElementById('count').textContent=(i+1)+' / '+slides.length;
+    document.getElementById('prog').style.width=((i+1)/slides.length*100)+'%';
+    slides[i].scrollTop=0;
+  }
+
+  function confetti(){
+    if(calm)return;
+    var c=document.createElement('div');c.className='confetti';
+    var set=['🧺','🫧','🧴','⭐','✨','👕'];
+    for(var k=0;k<45;k++){
+      var b=document.createElement('b');
+      b.textContent=set[k%set.length];
+      b.style.left=Math.random()*100+'%';
+      b.style.animationDuration=(2.5+Math.random()*3)+'s';
+      b.style.animationDelay=(Math.random()*1.2)+'s';
+      c.appendChild(b);
+    }
+    document.body.appendChild(c);
+    setTimeout(function(){c.remove()},7500);
+  }
+
+  function go(n){
+    n=Math.max(0,Math.min(slides.length-1,n));
+    if(n===i||busy)return;
+    if(calm){show(n);if(n===slides.length-1)confetti();return}
+    var dir=n>i?'fwd':'back';busy=true;
+    wave.className='wave run '+dir;
+    setTimeout(function(){show(n)},530);
+    setTimeout(function(){
+      wave.className='wave';
+      busy=false;
+      if(n===slides.length-1)confetti();
+    },1060);
+  }
+
+  document.getElementById('next').onclick=function(){go(i+1)};
+  document.getElementById('prev').onclick=function(){go(i-1)};
+
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();go(i+1)}
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>-1){e.preventDefault();go(i-1)}
+    else if(e.key==='Home')go(0);
+    else if(e.key==='End')go(slides.length-1);
+    else if(e.key==='f'||e.key==='F'){
+      try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(x){}
+    }
+  });
+
+  var sx=null;
+  document.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(sx===null)return;
+    var d=e.changedTouches[0].clientX-sx;
+    if(Math.abs(d)>60)go(i+(d<0?1:-1));
+    sx=null;
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>
